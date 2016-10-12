@@ -1,0 +1,22 @@
+{
+  "name": "node-dda-sql-sqlite101",
+  "version": "1.0.0",
+  "description": "Node / Database Driven Applications / SQL / SQLite101",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iamericanartist/node-dda-sql-sqlite101.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iamericanartist/node-dda-sql-sqlite101/issues"
+  },
+  "homepage": "https://github.com/iamericanartist/node-dda-sql-sqlite101#readme",
+  "dependencies": {
+    "sqlite3": "^3.1.6"
+  }
+}
