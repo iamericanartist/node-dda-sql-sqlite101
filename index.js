@@ -10,6 +10,10 @@ var table = new Table({
     head: ['InvoiceId', 'Name', 'InvoiceDate', 'BillingCountry']
   , colWidths: [20, 20, 20, 20]
 })
+var table2 = new Table({
+    head: ['Name']
+  , colWidths: [20]
+})
 
 
 
@@ -22,7 +26,7 @@ db.serialize(() => {    //3
     FROM    Customer
     WHERE   Country IS NOT "USA"
   `, (err, customers) => {
-    console.log("~~~Country IS NOT 'USA'~~~\n",customers)
+    // console.log("~~~Country IS NOT 'USA'~~~\n",customers)
   })
 
 
@@ -35,7 +39,7 @@ db.serialize(() => {    //3
     FROM    Customer
     WHERE   Country IS "Brazil"
   `, (err, customers) => {
-    console.log("~~~Country IS 'Brazil'~~~\n", customers)
+    // console.log("~~~Country IS 'Brazil'~~~\n", customers)
   })
 
 // db.serialize(() => {    //4.1 of 3
@@ -58,7 +62,7 @@ db.serialize(() => {    //3
     FROM   Customer
     WHERE  Country IS 'Brazil'
   `, (err, { CustomerId, Name, Country }) => {
-    console.log(`${CustomerId}: ${Name} (${Country})`)
+    // console.log(`${CustomerId}: ${Name} (${Country})`)
   })
 
 
@@ -74,7 +78,7 @@ db.serialize(() => {    //3
     ON     Invoice.CustomerId = Customer.CustomerId
     WHERE  Country = "Brazil"
   `, (err, row) => {
-    console.log(row)
+    // console.log(row)
   })
 
 // //6 create table with cli-table / InvoiceId first
@@ -121,8 +125,25 @@ db.serialize(() => {    //3
 
 
 
+// 4 Provide a query showing only the Employees who are Sales Agents.
+// // db.serialize(() => {    //7  
+  db.each(`
+    SELECT FirstName || " " || LastName AS "Name"
+    FROM   Employee
+    WHERE  Employee.Title = "Sales Support Agent"
+  `, (err, emp) => table2.push([emp.Name])
 
+  // table is an Array, so you can `push`, `unshift`, `splice` and friends 
 
+  ,()=> console.log(table2.toString()))
 
+///////////////////////////  SWANNS WAY  ///////////////////////////
+const table2S = new Table({ head: ["NAME"], style: {compact: true} });
+  db.each(`SELECT FirstName || ' ' || LastName AS Name
+           FROM Employee
+           WHERE Employee.Title = "Sales Support Agent"
+           `, (err, emp) => {
+             table2S.push(emp)
+           }, () => console.log(table2S.toString()))
+///////////////////////////  /  ///////////////////////////
 })
-
